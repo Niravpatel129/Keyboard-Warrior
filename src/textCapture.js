@@ -1,6 +1,7 @@
 // src/textCapture.js
 const { exec } = require('child_process');
 const { clipboard } = require('electron');
+const { processTextWithAI } = require('./processTextWithAI');
 
 function captureHighlightedText() {
   console.log('Capturing highlighted text...');
@@ -8,11 +9,11 @@ function captureHighlightedText() {
     console.log('Highlighted text:', highlightedText);
 
     if (highlightedText) {
-      // Modify the text by adding 'test' between all words
-      const modifiedText = highlightedText.split(' ').join(' test ');
-
-      // Replace the selected text with the modified text
-      replaceSelectedText(modifiedText);
+      // Process the text using AI to fix grammar
+      processTextWithAI(highlightedText, (modifiedText) => {
+        // Replace the selected text with the modified text
+        replaceSelectedText(modifiedText);
+      });
     } else {
       console.log('No highlighted text found');
     }

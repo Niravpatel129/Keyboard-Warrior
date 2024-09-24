@@ -1,11 +1,25 @@
 const { OpenAI } = require('openai');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const openai = new OpenAI({
-  apiKey: 'sk-proj-QsIIQq4wKSaMYH8UmuNuT3BlbkFJpaLI1k8XnK2XILpHSsVi',
+  apiKey: process.env.OPEN_AI_API_KEY,
 });
 
 async function processTextWithAI(text, callback) {
   console.log('PROCESSING TEXT WITH AI...');
+
+  if (!text || typeof text !== 'string' || text.trim().length === 0) {
+    console.error('Invalid input text');
+    callback(text);
+    return;
+  }
+
+  if (typeof callback !== 'function') {
+    console.error('Invalid callback provided');
+    return;
+  }
 
   try {
     const response = await openai.chat.completions.create({
@@ -18,7 +32,15 @@ async function processTextWithAI(text, callback) {
       temperature: 0.5,
     });
 
+    if (!response.choices || response.choices.length === 0 || !response.choices[0].message) {
+      throw new Error('Invalid response from OpenAI API');
+    }
+
     const correctedText = response.choices[0].message.content.trim();
+
+    if (correctedText.length === 0) {
+      throw new Error('Corrected text is empty');
+    }
 
     callback(correctedText);
   } catch (error) {

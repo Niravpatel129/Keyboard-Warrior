@@ -1,5 +1,7 @@
 const { OpenAI } = require('openai');
 const dotenv = require('dotenv');
+const { playSound } = require('./soundPlayer');
+const path = require('path');
 
 dotenv.config();
 
@@ -41,6 +43,10 @@ async function processTextWithAI(text, callback) {
     if (correctedText.length === 0) {
       throw new Error('Corrected text is empty');
     }
+
+    // Play sound after successful processing with half volume
+    const soundPath = path.join(__dirname, '..', 'assets', 'sounds', 'process.wav');
+    playSound(soundPath, 0.2);
 
     callback(correctedText);
   } catch (error) {

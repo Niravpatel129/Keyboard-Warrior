@@ -89,7 +89,7 @@ function replaceSelectedText(text) {
     }
     // Play sound after pasting
     const soundPath = path.join(__dirname, '..', 'assets', 'sounds', 'paste.wav');
-    playSound(soundPath);
+    // playSound(soundPath);
     // Wait a moment to ensure paste is completed
     setTimeout(() => {
       // Restore the previous clipboard content

@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "electron": "^x.x.x",
     "electron-clipboard-extended": "^x.x.x",
-    "menubar": "^9.5.0"
+    "menubar": "^9.5.0",
+    "openai": "^4.63.0"
   },
   "devDependencies": {
     "electron-reloader": "^1.2.3"

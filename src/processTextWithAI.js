@@ -10,8 +10,6 @@ const openai = new OpenAI({
 });
 
 async function processTextWithAI(text, callback) {
-  console.log('PROCESSING TEXT WITH AI...');
-
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
     console.error('Invalid input text');
     callback(text);

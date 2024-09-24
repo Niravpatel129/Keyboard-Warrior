@@ -1,0 +1,21 @@
+{
+  "name": "ai-text-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development nodemon --watch . --exec electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^x.x.x",
+    "electron-clipboard-extended": "^x.x.x",
+    "menubar": "^9.5.0"
+  },
+  "devDependencies": {
+    "electron-reloader": "^1.2.3"
+  }
+}

@@ -8,7 +8,6 @@
     "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js",
     "build": "npx electron-builder",
     "compile": "electron-builder --dir",
-    "prerelease": "npm run version",
     "release": "electron-builder --publish always"
   },
   "keywords": [

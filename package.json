@@ -61,7 +61,8 @@
         "owner": "Niravpatel129",
         "repo": "ghost-hand"
       }
-    ]
+    ],
+    "afterSign": "scripts/notarize.js"
   },
   "repository": {
     "type": "git",

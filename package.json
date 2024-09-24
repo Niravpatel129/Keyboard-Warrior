@@ -1,0 +1,71 @@
+{
+  "name": "ghost-hand",
+  "version": "1.0.1",
+  "description": "Ghost Hand - An AI-powered text assistant",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron src/main.js",
+    "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js",
+    "build": "npx electron-builder",
+    "compile": "electron-builder --dir",
+    "prerelease": "npm run version",
+    "release": "electron-builder --publish always"
+  },
+  "keywords": [
+    "ghost hand",
+    "ai",
+    "text assistant"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "electron-clipboard-extended": "^x.x.x",
+    "menubar": "^9.5.0",
+    "openai": "^4.63.0"
+  },
+  "devDependencies": {
+    "electron": "^x.x.x",
+    "electron-builder": "^24.6.3",
+    "electron-reloader": "^1.2.3",
+    "version-bump-prompt": "^6.1.0"
+  },
+  "build": {
+    "appId": "com.yourcompany.ghost-hand",
+    "productName": "Ghost Hand",
+    "mac": {
+      "identity": "Strive Games Inc (RCJS4748VY)",
+      "icon": "assets/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "signIgnore": [
+        "node_modules/*"
+      ]
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "icon": "assets/icon.png",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Niravpatel129",
+        "repo": "ghost-hand"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Niravpatel129/ghost-hand.git"
+  }
+}

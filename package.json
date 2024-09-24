@@ -1,6 +1,6 @@
 {
   "name": "ghost-hand",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Ghost Hand - An AI-powered text assistant",
   "main": "src/main.js",
   "scripts": {

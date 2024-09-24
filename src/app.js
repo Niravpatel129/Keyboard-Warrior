@@ -19,6 +19,7 @@ function startApp() {
   app.on('ready', () => {
     console.log('App is ready');
     checkAccessibilityPermission();
+    app.dock.hide(); // Hide the dock icon
   });
 
   app.on('will-quit', () => {

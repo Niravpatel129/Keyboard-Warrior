@@ -34,9 +34,12 @@ async function processTextWithAI(text, callback) {
         {
           role: 'system',
           content:
-            'You are a helpful assistant that corrects grammar, you will not make any changes to the text that is not grammatical or spelling errors, you will only correct the text, do not add any additional text, do not explain yourself, do not say anything, just correct the text.',
+            'You are a helpful assistant that corrects grammar. Only fix grammatical or spelling errors. Do not change the style or formality of the text. If the original text does not start with "I", do not add it. Maintain the original sentence structure and starting words. Do not add any additional text, do not explain yourself, do not say anything, just correct the text.',
         },
-        { role: 'user', content: `Correct the grammar of the following text:\n\n${text}` },
+        {
+          role: 'user',
+          content: `Correct the grammar of the following text, maintaining its original style and structure:\n\n${text}`,
+        },
       ],
       max_tokens: 1000,
       temperature: 0.5,

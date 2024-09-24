@@ -10,6 +10,12 @@ const openai = new OpenAI({
 });
 
 async function processTextWithAI(text, callback) {
+  // if length is too long just return the text
+  if (text.length > 1000) {
+    callback(text);
+    return;
+  }
+
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
     console.error('Invalid input text');
     callback(text);
@@ -28,7 +34,7 @@ async function processTextWithAI(text, callback) {
         { role: 'system', content: 'You are a helpful assistant that corrects grammar.' },
         { role: 'user', content: `Correct the grammar of the following text:\n\n${text}` },
       ],
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0.5,
     });
 

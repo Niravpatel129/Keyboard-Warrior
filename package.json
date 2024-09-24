@@ -45,7 +45,7 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "your-github-username",
+        "owner": "Niravpatel129",
         "repo": "ghost-hand"
       }
     ]

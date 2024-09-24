@@ -1,7 +1,7 @@
 {
-  "name": "ai-text-helper",
+  "name": "ghost-hand",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ghost Hand - An AI-powered text assistant",
   "main": "src/main.js",
   "scripts": {
     "start": "electron src/main.js",
@@ -9,7 +9,11 @@
     "build": "npx electron-builder",
     "compile": "electron-builder --dir"
   },
-  "keywords": [],
+  "keywords": [
+    "ghost hand",
+    "ai",
+    "text assistant"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -24,15 +28,18 @@
     "electron": "^x.x.x"
   },
   "build": {
-    "appId": "com.yourcompany.ai-text-helper",
+    "appId": "com.yourcompany.ghost-hand",
+    "productName": "Ghost Hand",
     "mac": {
-      "category": "public.app-category.productivity"
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.icns"
     },
     "win": {
       "target": "nsis"
     },
     "linux": {
       "target": "AppImage"
-    }
+    },
+    "icon": "assets/icon.png"
   }
 }

@@ -6,7 +6,7 @@ const path = require('path');
 dotenv.config();
 
 const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY,
+  apiKey: 'sk-proj-QsIIQq4wKSaMYH8UmuNuT3BlbkFJpaLI1k8XnK2XILpHSsVi',
 });
 
 async function processTextWithAI(text, callback) {

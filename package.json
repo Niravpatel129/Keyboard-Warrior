@@ -5,19 +5,34 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron src/main.js",
-    "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js"
+    "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js",
+    "build": "electron-builder",
+    "compile": "electron-builder --dir"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "electron": "^x.x.x",
     "electron-clipboard-extended": "^x.x.x",
     "menubar": "^9.5.0",
     "openai": "^4.63.0"
   },
   "devDependencies": {
-    "electron-reloader": "^1.2.3"
+    "electron-reloader": "^1.2.3",
+    "electron-builder": "^24.6.3",
+    "electron": "^x.x.x"
+  },
+  "build": {
+    "appId": "com.yourcompany.ai-text-helper",
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

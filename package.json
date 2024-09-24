@@ -1,6 +1,6 @@
 {
   "name": "ghost-hand",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Ghost Hand - An AI-powered text assistant",
   "main": "src/main.js",
   "scripts": {
@@ -59,7 +59,9 @@
       {
         "provider": "github",
         "owner": "Niravpatel129",
-        "repo": "ghost-hand"
+        "repo": "ghost-hand",
+        "releaseType": "release",
+        "publishAutoUpdate": true
       }
     ],
     "afterSign": "scripts/notarize.js"

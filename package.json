@@ -2,10 +2,10 @@
   "name": "ai-text-helper",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
-    "dev": "NODE_ENV=development nodemon --watch . --exec electron ."
+    "start": "electron src/main.js",
+    "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js"
   },
   "keywords": [],
   "author": "",

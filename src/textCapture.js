@@ -2,8 +2,6 @@
 const { exec } = require('child_process');
 const { clipboard } = require('electron');
 const { processTextWithAI } = require('./processTextWithAI');
-const { playSound } = require('./soundPlayer');
-const path = require('path');
 
 function captureHighlightedText() {
   console.log('Capturing highlighted text...');
@@ -88,7 +86,6 @@ function replaceSelectedText(text) {
       console.error(`stderr: ${stderr}`);
     }
     // Play sound after pasting
-    const soundPath = path.join(__dirname, '..', 'assets', 'sounds', 'paste.wav');
     // playSound(soundPath);
     // Wait a moment to ensure paste is completed
     setTimeout(() => {

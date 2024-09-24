@@ -2,7 +2,7 @@ const { OpenAI } = require('openai');
 const dotenv = require('dotenv');
 const { playSound } = require('./soundPlayer');
 const path = require('path');
-import { OPEN_AI_API_KEY } from './config';
+const { OPEN_AI_API_KEY } = require('./config');
 
 dotenv.config();
 

@@ -31,7 +31,11 @@ async function processTextWithAI(text, callback) {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant that corrects grammar.' },
+        {
+          role: 'system',
+          content:
+            'You are a helpful assistant that corrects grammar, you will not make any changes to the text that is not grammatical or spelling errors, you will only correct the text, do not add any additional text, do not explain yourself, do not say anything, just correct the text.',
+        },
         { role: 'user', content: `Correct the grammar of the following text:\n\n${text}` },
       ],
       max_tokens: 1000,

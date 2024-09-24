@@ -2,10 +2,10 @@
   "name": "ghost-hand",
   "version": "1.0.6",
   "description": "Ghost Hand - An AI-powered text assistant",
-  "main": "src/main.js",
+  "main": "main/main.js",
   "scripts": {
-    "start": "electron src/main.js",
-    "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js",
+    "start": "electron main/main.js",
+    "dev": "NODE_ENV=development nodemon --watch src --exec electron main/main.js",
     "build": "npx electron-builder",
     "compile": "electron-builder --dir",
     "release": "electron-builder --publish always"

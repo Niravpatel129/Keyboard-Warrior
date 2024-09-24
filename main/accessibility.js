@@ -13,7 +13,7 @@ function checkAccessibilityPermission() {
   if (isTrusted) {
     createMenubar();
   } else {
-    console.log('Accessibility permission not granted. Exiting...');
+    console.log('Accessibility permission not granted. Exiting.');
     app.quit();
   }
 }

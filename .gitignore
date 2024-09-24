@@ -9,6 +9,7 @@ dist/
 build/
 release/
 src/config.js
+main/config.js
 
 # macOS specific
 .DS_Store

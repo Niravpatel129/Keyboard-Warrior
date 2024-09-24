@@ -8,19 +8,28 @@ function captureHighlightedText() {
   simulateCopy((highlightedText) => {
     console.log('Highlighted text:', highlightedText);
 
-    if (highlightedText) {
+    if (highlightedText && highlightedText.trim().length > 0) {
       // Process the text using AI to fix grammar
       processTextWithAI(highlightedText, (modifiedText) => {
-        // Replace the selected text with the modified text
-        replaceSelectedText(modifiedText);
+        if (modifiedText && modifiedText.trim().length > 0) {
+          // Replace the selected text with the modified text
+          replaceSelectedText(modifiedText);
+        } else {
+          console.log('AI processing returned empty text. No changes made.');
+        }
       });
     } else {
-      console.log('No highlighted text found');
+      console.log('No highlighted text found or text is empty');
     }
   });
 }
 
 function simulateCopy(callback) {
+  if (typeof callback !== 'function') {
+    console.error('Invalid callback provided to simulateCopy');
+    return;
+  }
+
   const previousClipboardContent = clipboard.readText();
 
   const script = `
@@ -49,6 +58,11 @@ function simulateCopy(callback) {
 }
 
 function replaceSelectedText(text) {
+  if (typeof text !== 'string' || text.trim().length === 0) {
+    console.error('Invalid text provided for replacement');
+    return;
+  }
+
   const previousClipboardContent = clipboard.readText();
 
   // Set the clipboard to the modified text
@@ -64,6 +78,8 @@ function replaceSelectedText(text) {
   exec(`osascript -e '${script}'`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error simulating paste command: ${error}`);
+      // Restore the previous clipboard content immediately in case of error
+      clipboard.writeText(previousClipboardContent);
       return;
     }
     if (stderr) {

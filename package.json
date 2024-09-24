@@ -1,6 +1,6 @@
 {
   "name": "ghost-hand",
-  "version": "1.0.28",
+  "version": "1.0.1",
   "description": "Ghost Hand - An AI-powered text assistant",
   "main": "src/main.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "build": "npx electron-builder",
     "compile": "electron-builder --dir",
     "prerelease": "npm run version",
-    "release": "electron-builder --publish always",
-    "version": "npx version-bump-prompt --commit --tag --push"
+    "release": "electron-builder --publish always"
   },
   "keywords": [
     "ghost hand",

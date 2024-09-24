@@ -2,11 +2,12 @@ const { OpenAI } = require('openai');
 const dotenv = require('dotenv');
 const { playSound } = require('./soundPlayer');
 const path = require('path');
+import { OPEN_AI_API_KEY } from './config';
 
 dotenv.config();
 
 const openai = new OpenAI({
-  apiKey: 'sk-proj-QsIIQq4wKSaMYH8UmuNuT3BlbkFJpaLI1k8XnK2XILpHSsVi',
+  apiKey: OPEN_AI_API_KEY,
 });
 
 async function processTextWithAI(text, callback) {

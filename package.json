@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron src/main.js",
     "dev": "NODE_ENV=development nodemon --watch src --exec electron src/main.js",
-    "build": "electron-builder",
+    "build": "npx electron-builder",
     "compile": "electron-builder --dir"
   },
   "keywords": [],

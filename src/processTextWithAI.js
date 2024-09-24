@@ -1,10 +1,7 @@
-const dotenv = require('dotenv');
 const { OpenAI } = require('openai');
 
-dotenv.config();
-
 const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY,
+  apiKey: 'sk-proj-QsIIQq4wKSaMYH8UmuNuT3BlbkFJpaLI1k8XnK2XILpHSsVi',
 });
 
 async function processTextWithAI(text, callback) {
@@ -23,7 +20,6 @@ async function processTextWithAI(text, callback) {
 
     const correctedText = response.choices[0].message.content.trim();
 
-    console.log('🚀  correctedText:', correctedText);
     callback(correctedText);
   } catch (error) {
     console.error('Error processing text with AI:', error);

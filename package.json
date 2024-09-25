@@ -5,7 +5,7 @@
   "main": "main/main.js",
   "scripts": {
     "start": "NODE_ENV=development webpack && electron .",
-    "dev": "NODE_ENV=development nodemon --watch src --exec 'webpack && electron .'",
+    "dev": "NODE_ENV=development concurrently \"webpack --watch\" \"nodemon --watch main --exec electron .\"",
     "build": "NODE_ENV=production webpack && npx electron-builder",
     "compile": "NODE_ENV=production webpack && electron-builder --dir",
     "release": "NODE_ENV=production webpack && electron-builder --publish always"
@@ -32,9 +32,11 @@
     "@babel/preset-react": "^7.24.7",
     "@electron/notarize": "^2.3.2",
     "babel-loader": "^9.2.1",
+    "concurrently": "^8.2.2",
     "electron": "^x.x.x",
     "electron-builder": "^24.6.3",
     "electron-reloader": "^1.2.3",
+    "nodemon": "^2.0.22",
     "version-bump-prompt": "^6.1.0",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"

@@ -12,7 +12,7 @@ function createTray() {
     {
       label: 'Settings',
       click: () => {
-        const settingsWindow = new BrowserWindow({
+        let settingsWindow = new BrowserWindow({
           width: 300,
           height: 400,
           webPreferences: {
@@ -52,11 +52,11 @@ function createTray() {
       console.log('Global shortcut Command+, pressed');
 
       const promptWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 400,
+        height: 200,
         webPreferences: {
           nodeIntegration: true,
-          contextIsolation: false,
+          contextIsolation: true,
         },
       });
 
@@ -69,7 +69,7 @@ function createTray() {
 
       promptWindow.loadURL(settingsUrl);
 
-      captureHighlightedText();
+      // captureHighlightedText();
     });
 
     if (!registered) {

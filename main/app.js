@@ -1,4 +1,5 @@
-const { app, BrowserWindow, globalShortcut } = require('electron');
+const electron = require('electron');
+const { app, BrowserWindow, globalShortcut } = electron;
 
 const checkAccessibilityPermission = require('./accessibility');
 const createMenubar = require('./menubar');

@@ -1,6 +1,9 @@
 const path = require('path');
 const url = require('url');
-const { Tray, Menu, globalShortcut, app, BrowserWindow, screen } = require('electron');
+const electron = require('electron');
+
+const { Tray, Menu, globalShortcut, app, BrowserWindow, screen, ipcMain } = electron;
+
 const captureHighlightedText = require('./textCapture');
 let settingsWindow = null;
 let promptWindow = null;
@@ -50,9 +53,9 @@ function createSettingsWindow() {
     height: 400,
     show: false,
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
+      // preload: path.join(__dirname, '..', 'preload.js'),
     },
   });
 
@@ -81,12 +84,14 @@ function createSettingsWindow() {
   });
 }
 
-function showPromptWindow() {
-  captureHighlightedText();
+async function showPromptWindow() {
+  const highlightedText = await captureHighlightedText(true);
+  console.log('🚀  highlightedText:', highlightedText);
 
   if (promptWindow) {
     promptWindow.show();
     promptWindow.focus();
+    promptWindow.webContents.send('highlighted-text', highlightedText);
     return;
   }
 
@@ -101,9 +106,9 @@ function showPromptWindow() {
     frame: false,
     show: false,
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
+      // preload: path.join(__dirname, '..', 'preload.js'),
     },
   });
 
@@ -119,6 +124,7 @@ function showPromptWindow() {
   promptWindow.once('ready-to-show', () => {
     promptWindow.show();
     promptWindow.focus();
+    promptWindow.webContents.send('highlighted-text', highlightedText);
   });
 
   promptWindow.on('close', (event) => {
@@ -144,5 +150,11 @@ function registerGlobalShortcut() {
     console.error('Error registering shortcut:', error);
   }
 }
+
+// Set up IPC communication
+ipcMain.on('request-highlighted-text', async (event) => {
+  const highlightedText = await captureHighlightedText(true);
+  event.reply('highlighted-text', highlightedText);
+});
 
 module.exports = createMenubar;

@@ -3,24 +3,33 @@ const { exec } = require('child_process');
 const { clipboard } = require('electron');
 const { processTextWithAI } = require('./processTextWithAI');
 
-function captureHighlightedText() {
+function captureHighlightedText(highlightOnly = false) {
   console.log('Capturing highlighted text...');
-  simulateCopy((highlightedText) => {
-    console.log('Highlighted text:', highlightedText);
+  return new Promise((resolve, reject) => {
+    simulateCopy((highlightedText) => {
+      console.log('Highlighted text:', highlightedText);
 
-    if (highlightedText && highlightedText.trim().length > 0) {
-      // Process the text using AI to fix grammar
-      processTextWithAI(highlightedText, (modifiedText) => {
-        if (modifiedText && modifiedText.trim().length > 0) {
-          // Replace the selected text with the modified text
-          replaceSelectedText(modifiedText);
+      if (highlightedText && highlightedText.trim().length > 0) {
+        if (highlightOnly) {
+          resolve(highlightedText);
         } else {
-          console.log('AI processing returned empty text. No changes made.');
+          // Process the text using AI to fix grammar
+          processTextWithAI(highlightedText, (modifiedText) => {
+            if (modifiedText && modifiedText.trim().length > 0) {
+              // Replace the selected text with the modified text
+              replaceSelectedText(modifiedText);
+              resolve(modifiedText);
+            } else {
+              console.log('AI processing returned empty text. No changes made.');
+              resolve(highlightedText);
+            }
+          });
         }
-      });
-    } else {
-      console.log('No highlighted text found or text is empty');
-    }
+      } else {
+        console.log('No highlighted text found or text is empty');
+        resolve('');
+      }
+    });
   });
 }
 

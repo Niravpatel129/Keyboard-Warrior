@@ -1,4 +1,6 @@
-const { app, systemPreferences } = require('electron');
+const electron = require('electron');
+
+const { app, systemPreferences } = electron;
 
 function checkAccessibilityPermission(callback) {
   if (process.platform !== 'darwin') {

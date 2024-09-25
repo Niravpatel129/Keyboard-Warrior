@@ -116,9 +116,9 @@ function createPromptWindow(highlightedText) {
     promptWindow.show();
     promptWindow.focus();
     // Send highlightedText to the renderer process
-    if (highlightedText) {
-      promptWindow.webContents.send('highlighted-text', highlightedText);
-    }
+    // if (highlightedText) {
+    promptWindow.webContents.send('highlighted-text', highlightedText);
+    // }
     return;
   }
 

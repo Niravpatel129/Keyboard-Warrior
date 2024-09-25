@@ -59,9 +59,14 @@ function simulateCopy(callback) {
     // Wait a moment to ensure clipboard is updated
     setTimeout(() => {
       const copiedText = clipboard.readText();
-      // Restore the previous clipboard content
-      clipboard.writeText(previousClipboardContent);
-      callback(copiedText);
+      if (copiedText === previousClipboardContent) {
+        console.log('Nothing copied. User might not have selected anything.');
+        callback('');
+      } else {
+        // Restore the previous clipboard content
+        clipboard.writeText(previousClipboardContent);
+        callback(copiedText);
+      }
     }, 100);
   });
 }

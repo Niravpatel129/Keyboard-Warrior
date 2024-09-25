@@ -110,8 +110,6 @@ async function showPromptWindow() {
 }
 
 function createPromptWindow(highlightedText) {
-  const cursorPosition = screen.getCursorScreenPoint();
-
   if (promptWindow) {
     promptWindow.show();
     promptWindow.focus();
@@ -123,15 +121,21 @@ function createPromptWindow(highlightedText) {
   }
 
   const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
+
+  const windowWidth = Math.round(screenWidth * 0.4); // 40% of screen width
+  const windowHeight = Math.round(screenHeight * 0.1); // 30% of screen height
+  const bottomMargin = Math.round(screenHeight * 0.03); // 5% of screen height
+
   promptWindow = new BrowserWindow({
-    width: 800,
-    height: 200,
-    x: Math.round((screenWidth - 800) / 2),
-    y: screenHeight - 200,
+    width: windowWidth,
+    height: windowHeight,
+    x: Math.round((screenWidth - windowWidth) / 2),
+    y: screenHeight - windowHeight - bottomMargin,
     alwaysOnTop: true,
     frame: false,
     show: false,
     movable: true,
+    resizable: false,
     titleBarStyle: 'customButtonsOnHover',
     trafficLightPosition: { x: -100, y: -100 },
     webPreferences: {

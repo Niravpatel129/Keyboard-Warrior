@@ -1,5 +1,6 @@
 // Prompt.js
 import React, { useEffect, useState } from 'react';
+import PromptChat from '../PromptChat/PromptChat';
 const { ipcRenderer } = window.require('electron');
 
 function Prompt() {
@@ -25,6 +26,12 @@ function Prompt() {
       ipcRenderer.removeAllListeners('highlighted-text');
     };
   }, []);
+
+  return (
+    <div className='prompt-container h-screen w-screen'>
+      <PromptChat />
+    </div>
+  );
 
   return (
     <div className='prompt-container flex flex-col items-center justify-center text-black h-screen w-screen relative backdrop-filter backdrop-blur-md bg-opacity-50 bg-pink-200'>

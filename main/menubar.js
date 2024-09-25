@@ -1,5 +1,6 @@
 // src/menubar.js
 const path = require('path');
+const url = require('url');
 const { Tray, Menu, globalShortcut, app, BrowserWindow } = require('electron');
 const captureHighlightedText = require('./textCapture');
 
@@ -19,7 +20,18 @@ function createTray() {
             contextIsolation: false,
           },
         });
-        settingsWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+
+        const settingsUrl =
+          process.env.NODE_ENV === 'development123'
+            ? 'http://localhost:8080/'
+            : url.format({
+                pathname: path.join(__dirname, '..', 'dist', 'index.html'),
+                protocol: 'file:',
+                slashes: true,
+                hash: 'settings',
+              });
+
+        settingsWindow.loadURL(settingsUrl);
         settingsWindow.on('closed', () => {
           settingsWindow = null;
         });

@@ -1,6 +1,6 @@
 {
   "name": "ghost-hand",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Ghost Hand - An AI-powered text assistant",
   "main": "main/main.js",
   "scripts": {
@@ -42,6 +42,16 @@
   "build": {
     "appId": "com.yourcompany.ghost-hand",
     "productName": "Ghost Hand",
+    "files": [
+      "dist/**/*",
+      "main/**/*",
+      "package.json",
+      "assets/**/*",
+      "utils/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    },
     "mac": {
       "identity": "Strive Games Inc (RCJS4748VY)",
       "icon": "assets/icon.icns",

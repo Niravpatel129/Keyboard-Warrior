@@ -1,8 +1,15 @@
+const SKIP = true;
+
 const { notarize } = require('@electron/notarize');
 const { build } = require('../package.json');
 require('dotenv').config();
 
 exports.default = async function notarizing(context) {
+  if (SKIP) {
+    console.log('Skipping notarization...');
+    return;
+  }
+
   console.log('Notarizing...');
   const { electronPlatformName, appOutDir } = context;
   if (electronPlatformName !== 'darwin') {

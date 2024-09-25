@@ -8,9 +8,7 @@ function Prompt() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Submitted:', input);
-    // Send the input to the main process
     ipcRenderer.send('submit-input', input);
-    // Close the window
     window.close();
   };
 
@@ -19,23 +17,27 @@ function Prompt() {
       setInput(highlightedText);
     });
 
-    // Clean up the listener when the component unmounts
     return () => {
       ipcRenderer.removeAllListeners('highlighted-text');
     };
   }, []);
 
   return (
-    <div className='prompt-container mt-4 pt-4 flex flex-col items-center justify-center text-black h-full'>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
+    <div className='prompt-container flex flex-col items-center justify-center text-black h-screen w-screen bg-pink-200'>
+      <form onSubmit={handleSubmit} className='w-full h-full p-4 flex flex-col justify-center'>
+        <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder='Enter your prompt...'
           autoFocus
+          className='w-full h-3/4 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none resize-none mb-4'
         />
-        <button type='submit'>Submit</button>
+        <button
+          type='submit'
+          className='w-full h-1/4 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded text-xl'
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

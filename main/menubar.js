@@ -88,6 +88,7 @@ function createSettingsWindow() {
 
 async function showPromptWindow() {
   const highlightedText = await captureHighlightedText(true);
+  console.log('Highlighted text:', highlightedText); // Log the highlighted text
 
   // Get the frontmost application
   osascript.execute(
@@ -99,17 +100,22 @@ async function showPromptWindow() {
       }
       previousApp = result;
 
-      createPromptWindow();
+      // Pass highlightedText here
+      createPromptWindow(highlightedText);
     },
   );
 }
 
-function createPromptWindow() {
+function createPromptWindow(highlightedText) {
   const cursorPosition = screen.getCursorScreenPoint();
 
   if (promptWindow) {
     promptWindow.show();
     promptWindow.focus();
+    // Send highlightedText to the renderer process
+    if (highlightedText) {
+      promptWindow.webContents.send('highlighted-text', highlightedText);
+    }
     return;
   }
 
@@ -139,8 +145,10 @@ function createPromptWindow() {
   promptWindow.once('ready-to-show', () => {
     promptWindow.show();
     promptWindow.focus();
-    // If you have highlighted text to send, you can send it here
-    promptWindow.webContents.send('highlighted-text', highlightedText);
+    // Send highlightedText to the renderer process
+    if (highlightedText) {
+      promptWindow.webContents.send('highlighted-text', highlightedText);
+    }
   });
 
   promptWindow.on('close', (event) => {

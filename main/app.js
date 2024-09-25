@@ -1,5 +1,7 @@
 // src/app.js
-const { app } = require('electron');
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+
 const checkAccessibilityPermission = require('./accessibility');
 
 function startApp() {
@@ -17,6 +19,17 @@ function startApp() {
   });
 
   app.on('ready', () => {
+    const win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      },
+    });
+
+    win.loadFile(path.join(__dirname, '../dist/index.html'));
+
     console.log('App is ready');
     checkAccessibilityPermission();
     app.dock.hide(); // Hide the dock icon

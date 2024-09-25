@@ -4,11 +4,11 @@
   "description": "Ghost Hand - An AI-powered text assistant",
   "main": "main/main.js",
   "scripts": {
-    "start": "electron main/main.js",
-    "dev": "NODE_ENV=development nodemon --watch src --exec electron main/main.js",
-    "build": "npx electron-builder",
-    "compile": "electron-builder --dir",
-    "release": "electron-builder --publish always"
+    "start": "webpack && electron .",
+    "dev": "NODE_ENV=development nodemon --watch src --exec 'webpack && electron .'",
+    "build": "webpack && npx electron-builder",
+    "compile": "webpack && electron-builder --dir",
+    "release": "webpack && electron-builder --publish always"
   },
   "keywords": [
     "ghost hand",
@@ -20,14 +20,24 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "electron-clipboard-extended": "^x.x.x",
+    "html-webpack-plugin": "^5.6.0",
     "menubar": "^9.5.0",
-    "openai": "^4.63.0"
+    "openai": "^4.63.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@electron/notarize": "^2.3.2",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7",
+    "babel-loader": "^9.2.1",
     "electron": "^x.x.x",
     "electron-builder": "^24.6.3",
     "electron-reloader": "^1.2.3",
-    "version-bump-prompt": "^6.1.0"
+    "version-bump-prompt": "^6.1.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   },
   "build": {
     "appId": "com.yourcompany.ghost-hand",

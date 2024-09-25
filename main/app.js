@@ -27,7 +27,7 @@ function startApp() {
     }
     checkAccessibilityPermission(() => {
       if (!menubar) {
-        menubar = createMenubar();
+        // menubar = createMenubar();
       }
     });
   });

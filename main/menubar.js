@@ -21,15 +21,12 @@ function createTray() {
           },
         });
 
-        const settingsUrl =
-          process.env.NODE_ENV === 'development123'
-            ? 'http://localhost:8080/'
-            : url.format({
-                pathname: path.join(__dirname, '..', 'dist', 'index.html'),
-                protocol: 'file:',
-                slashes: true,
-                hash: 'settings',
-              });
+        const settingsUrl = url.format({
+          pathname: path.join(__dirname, '..', 'dist', 'index.html'),
+          protocol: 'file:',
+          slashes: true,
+          hash: 'settings',
+        });
 
         settingsWindow.loadURL(settingsUrl);
         settingsWindow.on('closed', () => {
@@ -53,6 +50,25 @@ function createTray() {
   try {
     const registered = globalShortcut.register('Command+,', () => {
       console.log('Global shortcut Command+, pressed');
+
+      const promptWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+          nodeIntegration: true,
+          contextIsolation: false,
+        },
+      });
+
+      const settingsUrl = url.format({
+        pathname: path.join(__dirname, '..', 'dist', 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+        hash: 'prompt',
+      });
+
+      promptWindow.loadURL(settingsUrl);
+
       captureHighlightedText();
     });
 

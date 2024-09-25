@@ -19,16 +19,16 @@ function startApp() {
   });
 
   app.on('ready', () => {
-    const win = new BrowserWindow({
-      width: 800,
-      height: 600,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
-      },
-    });
+    // const win = new BrowserWindow({
+    //   width: 800,
+    //   height: 600,
+    //   webPreferences: {
+    //     nodeIntegration: true,
+    //     contextIsolation: false,
+    //   },
+    // });
 
-    win.loadFile(path.join(__dirname, '../dist/index.html'));
+    // win.loadFile(path.join(__dirname, '../dist/index.html'));
 
     console.log('App is ready');
     checkAccessibilityPermission();

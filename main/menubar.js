@@ -1,13 +1,32 @@
 // src/menubar.js
 const path = require('path');
-const { Tray, Menu, globalShortcut, app } = require('electron');
+const { Tray, Menu, globalShortcut, app, BrowserWindow } = require('electron');
 const captureHighlightedText = require('./textCapture');
 
 function createTray() {
   console.log('Creating tray...');
   const tray = new Tray(path.join(__dirname, '../assets/MenubarIconTemplate.png'));
 
-  const contextMenu = Menu.buildFromTemplate([{ label: 'Quit', click: () => app.quit() }]);
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Settings',
+      click: () => {
+        const settingsWindow = new BrowserWindow({
+          width: 300,
+          height: 400,
+          webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+          },
+        });
+        settingsWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+        settingsWindow.on('closed', () => {
+          settingsWindow = null;
+        });
+      },
+    },
+    { label: 'Quit', click: () => app.quit() },
+  ]);
 
   tray.setContextMenu(contextMenu);
 

@@ -4,16 +4,13 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-const isProd = process.env.IS_PROD === 'true';
-
 module.exports = {
-  mode: isDevelopment ? 'development' : 'production',
+  mode: 'development',
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: !isDevelopment ? '/' : './',
+    publicPath: './',
   },
   module: {
     rules: [

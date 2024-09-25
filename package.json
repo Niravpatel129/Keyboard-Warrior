@@ -1,14 +1,14 @@
 {
   "name": "ghost-hand",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Ghost Hand - An AI-powered text assistant",
   "main": "main/main.js",
   "scripts": {
-    "start": "webpack && electron .",
+    "start": "NODE_ENV=development webpack && electron .",
     "dev": "NODE_ENV=development nodemon --watch src --exec 'webpack && electron .'",
-    "build": "webpack && npx electron-builder",
-    "compile": "webpack && electron-builder --dir",
-    "release": "webpack && electron-builder --publish always"
+    "build": "NODE_ENV=production webpack && npx electron-builder",
+    "compile": "NODE_ENV=production webpack && electron-builder --dir",
+    "release": "NODE_ENV=production webpack && electron-builder --publish always"
   },
   "keywords": [
     "ghost hand",

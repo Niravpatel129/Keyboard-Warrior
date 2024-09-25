@@ -1,5 +1,4 @@
 // src/main.js
-const { app } = require('electron');
 const startApp = require('./app');
 
 startApp();

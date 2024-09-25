@@ -1,3 +1,4 @@
+// Prompt.js
 import React, { useEffect, useState } from 'react';
 const { ipcRenderer } = window.require('electron');
 
@@ -6,15 +7,22 @@ function Prompt() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle the submission of the prompt
     console.log('Submitted:', input);
-    // You can add logic here to send the input to your main process
+    // Send the input to the main process
+    ipcRenderer.send('submit-input', input);
+    // Close the window
+    window.close();
   };
 
   useEffect(() => {
     ipcRenderer.on('highlighted-text', (event, highlightedText) => {
       setInput(highlightedText);
     });
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      ipcRenderer.removeAllListeners('highlighted-text');
+    };
   }, []);
 
   return (

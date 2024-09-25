@@ -1,12 +1,15 @@
+// menubar.js
 const path = require('path');
 const url = require('url');
 const electron = require('electron');
+const osascript = require('node-osascript');
+const captureHighlightedText = require('./textCapture');
 
 const { Tray, Menu, globalShortcut, app, BrowserWindow, screen, ipcMain } = electron;
 
-const captureHighlightedText = require('./textCapture');
 let settingsWindow = null;
 let promptWindow = null;
+let previousApp = null;
 
 function createMenubar() {
   console.log('Creating menubar...');
@@ -55,7 +58,6 @@ function createSettingsWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      // preload: path.join(__dirname, '..', 'preload.js'),
     },
   });
 
@@ -86,16 +88,30 @@ function createSettingsWindow() {
 
 async function showPromptWindow() {
   const highlightedText = await captureHighlightedText(true);
-  console.log('🚀  highlightedText:', highlightedText);
+
+  // Get the frontmost application
+  osascript.execute(
+    `tell application "System Events" to get name of first application process whose frontmost is true`,
+    (err, result) => {
+      if (err) {
+        console.error('Error getting frontmost application:', err);
+        return;
+      }
+      previousApp = result;
+
+      createPromptWindow();
+    },
+  );
+}
+
+function createPromptWindow() {
+  const cursorPosition = screen.getCursorScreenPoint();
 
   if (promptWindow) {
     promptWindow.show();
     promptWindow.focus();
-    promptWindow.webContents.send('highlighted-text', highlightedText);
     return;
   }
-
-  const cursorPosition = screen.getCursorScreenPoint();
 
   promptWindow = new BrowserWindow({
     width: 400,
@@ -108,7 +124,6 @@ async function showPromptWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      // preload: path.join(__dirname, '..', 'preload.js'),
     },
   });
 
@@ -124,6 +139,7 @@ async function showPromptWindow() {
   promptWindow.once('ready-to-show', () => {
     promptWindow.show();
     promptWindow.focus();
+    // If you have highlighted text to send, you can send it here
     promptWindow.webContents.send('highlighted-text', highlightedText);
   });
 
@@ -136,6 +152,29 @@ async function showPromptWindow() {
 
   promptWindow.on('closed', () => {
     promptWindow = null;
+  });
+}
+
+function replaceSelectedText(text) {
+  // Escape special characters in the text
+  const escapedText = text.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/'/g, "\\'");
+
+  const script = `
+    tell application "${previousApp}"
+      activate
+      delay 0.1
+      tell application "System Events"
+        keystroke "${escapedText}"
+      end tell
+    end tell
+  `;
+
+  osascript.execute(script, (err) => {
+    if (err) {
+      console.error('Error executing AppleScript:', err);
+      return;
+    }
+    console.log('Replaced selected text');
   });
 }
 
@@ -152,9 +191,12 @@ function registerGlobalShortcut() {
 }
 
 // Set up IPC communication
-ipcMain.on('request-highlighted-text', async (event) => {
-  const highlightedText = await captureHighlightedText(true);
-  event.reply('highlighted-text', highlightedText);
+ipcMain.on('submit-input', (event, input) => {
+  const newText = input + ' test';
+  if (promptWindow) {
+    promptWindow.close();
+  }
+  replaceSelectedText(newText);
 });
 
 module.exports = createMenubar;

@@ -1,13 +1,19 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const isProd = process.env.IS_PROD === 'true';
 
 module.exports = {
-  mode: 'development',
+  mode: isDevelopment ? 'development' : 'production',
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    // publicPath: './' : '/',
+    publicPath: !isDevelopment ? '/' : './',
   },
   module: {
     rules: [

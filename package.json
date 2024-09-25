@@ -27,10 +27,10 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@electron/notarize": "^2.3.2",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
+    "@electron/notarize": "^2.3.2",
     "babel-loader": "^9.2.1",
     "electron": "^x.x.x",
     "electron-builder": "^24.6.3",

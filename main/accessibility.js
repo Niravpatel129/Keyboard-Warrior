@@ -1,17 +1,15 @@
-// src/accessibility.js
 const { app, systemPreferences } = require('electron');
-const createMenubar = require('./menubar');
 
-function checkAccessibilityPermission() {
+function checkAccessibilityPermission(callback) {
   if (process.platform !== 'darwin') {
-    createMenubar();
+    callback();
     return;
   }
 
   const isTrusted = systemPreferences.isTrustedAccessibilityClient(true);
 
   if (isTrusted) {
-    createMenubar();
+    callback();
   } else {
     console.log('Accessibility permission not granted. Exiting.');
     app.quit();

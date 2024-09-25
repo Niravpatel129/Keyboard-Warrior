@@ -122,11 +122,12 @@ function createPromptWindow(highlightedText) {
     return;
   }
 
+  const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
   promptWindow = new BrowserWindow({
-    width: 400,
+    width: 800,
     height: 200,
-    x: cursorPosition.x,
-    y: cursorPosition.y,
+    x: Math.round((screenWidth - 800) / 2),
+    y: screenHeight - 200,
     alwaysOnTop: true,
     frame: false,
     show: false,

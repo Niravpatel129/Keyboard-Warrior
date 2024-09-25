@@ -21,6 +21,7 @@ function App() {
 
   return (
     <div className='App'>
+      <div className='title-bar'>{/* invisible title bar for draggable window */}</div>
       {hash === 'prompt' && <Prompt />}
       {hash === 'settings' && <Settings />}
     </div>

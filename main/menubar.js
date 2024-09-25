@@ -131,6 +131,9 @@ function createPromptWindow(highlightedText) {
     alwaysOnTop: true,
     frame: false,
     show: false,
+    movable: true,
+    titleBarStyle: 'customButtonsOnHover',
+    trafficLightPosition: { x: -100, y: -100 },
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

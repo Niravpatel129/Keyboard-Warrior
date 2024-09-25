@@ -7,6 +7,7 @@ const captureHighlightedText = require('./textCapture');
 
 const { Tray, Menu, globalShortcut, app, BrowserWindow, screen, ipcMain } = electron;
 
+const isDev = process.env.NODE_ENV === 'development';
 let settingsWindow = null;
 let promptWindow = null;
 let previousApp = null;
@@ -61,12 +62,14 @@ function createSettingsWindow() {
     },
   });
 
-  const settingsUrl = url.format({
-    pathname: path.join(__dirname, '..', 'dist', 'index.html'),
-    protocol: 'file:',
-    slashes: true,
-    hash: 'settings',
-  });
+  const settingsUrl = isDev
+    ? 'http://localhost:8080/#settings'
+    : url.format({
+        pathname: path.join(__dirname, '..', 'dist', 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+        hash: 'settings',
+      });
 
   settingsWindow.loadURL(settingsUrl);
 
@@ -133,12 +136,14 @@ function createPromptWindow(highlightedText) {
     },
   });
 
-  const promptUrl = url.format({
-    pathname: path.join(__dirname, '..', 'dist', 'index.html'),
-    protocol: 'file:',
-    slashes: true,
-    hash: 'prompt',
-  });
+  const promptUrl = isDev
+    ? 'http://localhost:8080/#prompt'
+    : url.format({
+        pathname: path.join(__dirname, '..', 'dist', 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+        hash: 'prompt',
+      });
 
   promptWindow.loadURL(promptUrl);
 

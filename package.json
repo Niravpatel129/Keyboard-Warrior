@@ -5,7 +5,7 @@
   "main": "main/main.js",
   "scripts": {
     "start": "NODE_ENV=development webpack && electron .",
-    "dev": "NODE_ENV=development concurrently \"webpack --watch\" \"nodemon --watch main --exec electron .\"",
+    "dev": "NODE_ENV=development concurrently \"webpack serve --config webpack.config.js\" \"nodemon --watch main --exec electron .\"",
     "build": "NODE_ENV=production webpack && npx electron-builder",
     "compile": "NODE_ENV=production webpack && electron-builder --dir",
     "release": "NODE_ENV=production webpack && electron-builder --publish always"
@@ -44,11 +44,13 @@
     "nodemon": "^2.0.22",
     "postcss": "^8.4.47",
     "postcss-loader": "^8.1.1",
+    "react-error-overlay": "^6.0.11",
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.13",
     "version-bump-prompt": "^6.1.0",
     "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
   },
   "build": {
     "appId": "com.yourcompany.ghost-hand",

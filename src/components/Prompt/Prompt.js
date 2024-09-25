@@ -26,7 +26,7 @@ function Prompt() {
   }, []);
 
   return (
-    <div className='prompt-container'>
+    <div className='prompt-container mt-4 pt-4 flex flex-col items-center justify-center text-black h-full'>
       <form onSubmit={handleSubmit}>
         <input
           type='text'

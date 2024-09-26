@@ -13,7 +13,7 @@ function Prompt() {
       if (event.key === 'Escape') {
         ipcRenderer.send('submit-input', '');
 
-        window.close(); // This will close the Electron window
+        window.close();
       }
     };
 

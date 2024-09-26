@@ -37,10 +37,24 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
   }, [inputValue]);
 
   useEffect(() => {
-    // Focus the textarea when the component mounts
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
+    // Focus the textarea when the component mounts or becomes visible
+    const focusTextarea = () => {
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
+    };
+
+    focusTextarea();
+
+    // Add event listeners for visibility changes
+    document.addEventListener('visibilitychange', focusTextarea);
+    window.addEventListener('focus', focusTextarea);
+
+    return () => {
+      // Clean up event listeners
+      document.removeEventListener('visibilitychange', focusTextarea);
+      window.removeEventListener('focus', focusTextarea);
+    };
   }, []);
 
   useEffect(() => {
@@ -70,7 +84,7 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
             opacity: isThinking ? 0.5 : 1,
           }}
           aria-label='Chat input'
-          disabled={isThinking}
+          //   disabled={isThinking}
         />
         <div className='flex justify-between items-center px-3 py-2 bg-white sticky bottom-0'>
           <span className='text-xs text-gray-400'>Press Esc to close</span>

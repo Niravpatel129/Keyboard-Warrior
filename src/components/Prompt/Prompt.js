@@ -1,15 +1,19 @@
 // Prompt.js
 import React, { useEffect, useState } from 'react';
+import { AITextProcess } from '../../util/AITextProcess';
 import PromptChat from '../PromptChat/PromptChat';
 const { ipcRenderer } = window.require('electron');
 
 function Prompt() {
   const [input, setInput] = useState('');
 
-  const handleSubmit = (value) => {
+  const handleSubmit = async (value) => {
+    const response = await AITextProcess(value);
+    console.log('🚀  response:', response);
+
     // e.preventDefault();
     // console.log('Submitted:', input);
-    ipcRenderer.send('submit-input', value);
+    ipcRenderer.send('submit-input', response);
     window.close();
   };
 

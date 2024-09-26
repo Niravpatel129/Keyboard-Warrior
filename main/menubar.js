@@ -213,7 +213,7 @@ function registerGlobalShortcut() {
 
 // Set up IPC communication
 ipcMain.on('submit-input', (event, input) => {
-  const newText = input + ' test';
+  const newText = input;
   if (promptWindow) {
     promptWindow.close();
   }

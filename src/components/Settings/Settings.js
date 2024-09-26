@@ -55,20 +55,20 @@ export default function Component() {
         <div className='flex items-center justify-between'>
           <span className='text-gray-700'>Startup</span>
           <ToggleSwitch
-            label='Launch Raycast at login'
+            label='Launch Ghost Hand at login'
             checked={launchAtLogin}
             onChange={() => setLaunchAtLogin(!launchAtLogin)}
           />
         </div>
 
         <div className='flex items-center justify-between'>
-          <span className='text-gray-700'>Raycast Hotkey</span>
+          <span className='text-gray-700'>Ghost Hand Hotkey</span>
           <div className='text-right'>
             <button className='bg-white text-gray-700 px-4 py-2 rounded-md text-sm font-medium border border-gray-200 hover:border-gray-300 transition-colors'>
               ⌘ Space
             </button>
             <a href='#' className='block mt-1 text-xs text-gray-900 hover:underline'>
-              How to replace Spotlight with Raycast
+              How to replace Spotlight with Ghost Hand
             </a>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Component() {
               Pro
             </span>
             <h3 className='font-bold mt-2 text-gray-800'>Unlock Custom Themes</h3>
-            <p className='text-sm text-gray-600'>Try Raycast Pro with our 14 day free trial</p>
+            <p className='text-sm text-gray-600'>Try Ghost Hand Pro with our 14 day free trial</p>
           </div>
           <ArrowUpRight className='w-6 h-6 text-gray-900' />
         </div>

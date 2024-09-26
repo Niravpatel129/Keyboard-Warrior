@@ -106,7 +106,7 @@ function replaceSelectedText(text) {
       // Restore the previous clipboard content
       clipboard.writeText(previousClipboardContent);
       console.log('Selected text replaced successfully');
-    }, 0);
+    }, 100);
   });
 }
 

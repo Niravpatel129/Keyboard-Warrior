@@ -7,6 +7,7 @@ const { ipcRenderer } = window.require('electron');
 function Prompt() {
   const [isThinking, setIsThinking] = useState(false);
   const [input, setInput] = useState('');
+  const [selectedText, setSelectedText] = useState('');
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -27,8 +28,7 @@ function Prompt() {
   const handleSubmit = async (value) => {
     try {
       setIsThinking(true);
-      const response = await AITextProcess(value);
-      console.log('🚀  response:', response);
+      const response = await AITextProcess(selectedText, value);
 
       ipcRenderer.send('submit-input', response);
       window.close();
@@ -38,13 +38,15 @@ function Prompt() {
       // delay 1 second
       setTimeout(() => {
         setIsThinking(false);
-      }, 1000);
+      }, 500);
     }
   };
 
   useEffect(() => {
     ipcRenderer.on('highlighted-text', (event, highlightedText) => {
-      setInput(highlightedText);
+      console.log('🚀  highlightedText:', highlightedText);
+
+      setSelectedText(highlightedText);
     });
 
     return () => {

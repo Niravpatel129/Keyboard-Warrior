@@ -158,10 +158,11 @@ function createPromptWindow(highlightedText) {
   promptWindow.once('ready-to-show', () => {
     promptWindow.show();
     promptWindow.focus();
+    console.log('🚀  highlightedText:', highlightedText);
     // Send highlightedText to the renderer process
-    if (highlightedText) {
-      promptWindow.webContents.send('highlighted-text', highlightedText);
-    }
+    // if (highlightedText) {
+    promptWindow.webContents.send('highlighted-text', highlightedText);
+    // }
   });
 
   promptWindow.on('close', (event) => {

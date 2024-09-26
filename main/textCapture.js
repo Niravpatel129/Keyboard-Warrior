@@ -67,7 +67,7 @@ function simulateCopy(callback) {
         clipboard.writeText(previousClipboardContent);
         callback(copiedText);
       }
-    }, 0);
+    }, 100);
   });
 }
 

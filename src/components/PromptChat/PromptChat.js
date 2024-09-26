@@ -1,8 +1,9 @@
 import { ArrowUpIcon } from 'lucide-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-export default function PromptChat({ onSubmit, inputValue, setInputValue }) {
+export default function PromptChat({ onSubmit, inputValue, setInputValue, isThinking }) {
   const textareaRef = useRef(null);
+  const [dots, setDots] = useState('');
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -43,6 +44,15 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (isThinking) {
+      const interval = setInterval(() => {
+        setDots((prev) => (prev.length < 3 ? prev + '.' : ''));
+      }, 500);
+      return () => clearInterval(interval);
+    }
+  }, [isThinking]);
+
   return (
     <div className='w-full h-full mx-auto flex flex-col'>
       <div className='overflow-hidden flex flex-col flex-grow'>
@@ -63,13 +73,17 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue }) {
         />
         <div className='flex justify-between items-center px-3 py-2 bg-white sticky bottom-0'>
           <span className='text-xs text-gray-400'>Press Esc to close</span>
-          <button
-            onClick={handleSubmit}
-            className='p-2 bg-black hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
-            aria-label='Submit message'
-          >
-            <ArrowUpIcon className='h-4 w-4 text-white' />
-          </button>
+          {isThinking ? (
+            <span className='p-2 bg-gray-200 rounded-lg text-sm text-gray-600'>Thinking{dots}</span>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className='p-2 bg-black hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
+              aria-label='Submit message'
+            >
+              <ArrowUpIcon className='h-4 w-4 text-white' />
+            </button>
+          )}
         </div>
       </div>
     </div>

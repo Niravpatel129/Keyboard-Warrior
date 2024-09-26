@@ -5,16 +5,27 @@ import PromptChat from '../PromptChat/PromptChat';
 const { ipcRenderer } = window.require('electron');
 
 function Prompt() {
+  const [isThinking, setIsThinking] = useState(false);
   const [input, setInput] = useState('');
 
   const handleSubmit = async (value) => {
-    const response = await AITextProcess(value);
-    console.log('🚀  response:', response);
+    try {
+      setIsThinking(true);
+      const response = await AITextProcess(value);
+      console.log('🚀  response:', response);
 
-    // e.preventDefault();
-    // console.log('Submitted:', input);
-    ipcRenderer.send('submit-input', response);
-    window.close();
+      // e.preventDefault();
+      // console.log('Submitted:', input);
+      ipcRenderer.send('submit-input', response);
+      window.close();
+    } catch (error) {
+      console.error('Error processing text with AI:', error);
+    } finally {
+      // delay 1 second
+      setTimeout(() => {
+        setIsThinking(false);
+      }, 1000);
+    }
   };
 
   const handleClose = () => {
@@ -38,6 +49,7 @@ function Prompt() {
         onClose={handleClose}
         inputValue={input}
         setInputValue={setInput}
+        isThinking={isThinking}
       />
     </div>
   );

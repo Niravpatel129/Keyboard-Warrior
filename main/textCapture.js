@@ -67,7 +67,7 @@ function simulateCopy(callback) {
         clipboard.writeText(previousClipboardContent);
         callback(copiedText);
       }
-    }, 100);
+    }, 0);
   });
 }
 
@@ -106,7 +106,7 @@ function replaceSelectedText(text) {
       // Restore the previous clipboard content
       clipboard.writeText(previousClipboardContent);
       console.log('Selected text replaced successfully');
-    }, 100);
+    }, 0);
   });
 }
 

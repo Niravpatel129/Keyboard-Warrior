@@ -38,6 +38,7 @@ function Prompt() {
       // delay 1 second
       setTimeout(() => {
         setIsThinking(false);
+        setInput('');
       }, 500);
     }
   };

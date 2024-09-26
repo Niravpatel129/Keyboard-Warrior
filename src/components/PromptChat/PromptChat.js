@@ -1,7 +1,7 @@
 import { ArrowUpIcon } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function PromptChat({ onSubmit, inputValue, setInputValue, isThinking }) {
+export default function PromptChat({ onSubmit, inputValue, setInputValue, isThinking, errors }) {
   const textareaRef = useRef(null);
   const [dots, setDots] = useState('');
 
@@ -69,6 +69,15 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
   return (
     <div className='w-full h-full mx-auto flex flex-col bg-white'>
       <div className='overflow-hidden flex flex-col flex-grow'>
+        {errors && errors.length > 0 && (
+          <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-2'>
+            <ul className='list-disc list-inside'>
+              {errors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <textarea
           ref={textareaRef}
           value={inputValue}

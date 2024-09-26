@@ -10,7 +10,7 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
   };
 
   const handleSubmit = () => {
-    if (inputValue.trim()) {
+    if (inputValue.trim() && !isThinking) {
       console.log('Submitted:', inputValue);
       onSubmit(inputValue);
       setInputValue('');
@@ -54,7 +54,7 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
   }, [isThinking]);
 
   return (
-    <div className='w-full h-full mx-auto flex flex-col'>
+    <div className='w-full h-full mx-auto flex flex-col bg-white'>
       <div className='overflow-hidden flex flex-col flex-grow'>
         <textarea
           ref={textareaRef}
@@ -62,7 +62,7 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder='Enter your prompt here...'
-          className='w-full h-full p-3 resize-none overflow-auto border-none focus:ring-0 focus:outline-none flex-grow text-sm font-sans text-gray-700 placeholder-gray-400'
+          className='w-full h-full p-3 resize-none overflow-auto border-none focus:ring-0 focus:outline-none flex-grow text-sm font-sans text-gray-700 placeholder-gray-400 bg-white'
           style={{
             fontFamily:
               '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -70,16 +70,18 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
             lineHeight: '1.5',
           }}
           aria-label='Chat input'
+          disabled={isThinking}
         />
         <div className='flex justify-between items-center px-3 py-2 bg-white sticky bottom-0'>
           <span className='text-xs text-gray-400'>Press Esc to close</span>
           {isThinking ? (
-            <span className='p-2 bg-gray-200 rounded-lg text-sm text-gray-600'>Thinking{dots}</span>
+            <span className='p-2  rounded-lg text-xs text-gray-400'>☁️ Pondering{dots}</span>
           ) : (
             <button
               onClick={handleSubmit}
               className='p-2 bg-black hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
               aria-label='Submit message'
+              disabled={isThinking}
             >
               <ArrowUpIcon className='h-4 w-4 text-white' />
             </button>

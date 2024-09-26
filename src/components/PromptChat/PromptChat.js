@@ -1,7 +1,7 @@
 import { ArrowUpIcon } from 'lucide-react';
 import React, { useEffect, useRef } from 'react';
 
-export default function ChatInput({ onSubmit, inputValue, setInputValue }) {
+export default function PromptChat({ onSubmit, inputValue, setInputValue }) {
   const textareaRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -35,6 +35,13 @@ export default function ChatInput({ onSubmit, inputValue, setInputValue }) {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    // Focus the textarea when the component mounts
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
 
   return (
     <div className='w-full h-full mx-auto flex flex-col'>

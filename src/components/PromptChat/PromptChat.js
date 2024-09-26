@@ -13,7 +13,6 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
     if (inputValue.trim() && !isThinking) {
       console.log('Submitted:', inputValue);
       onSubmit(inputValue);
-      setInputValue('');
     }
   };
 
@@ -68,6 +67,7 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
               '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             fontSize: '14px',
             lineHeight: '1.5',
+            opacity: isThinking ? 0.5 : 1,
           }}
           aria-label='Chat input'
           disabled={isThinking}

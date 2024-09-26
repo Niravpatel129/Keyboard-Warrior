@@ -8,6 +8,22 @@ function Prompt() {
   const [isThinking, setIsThinking] = useState(false);
   const [input, setInput] = useState('');
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        ipcRenderer.send('submit-input', '');
+
+        window.close(); // This will close the Electron window
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const handleSubmit = async (value) => {
     try {
       setIsThinking(true);
@@ -28,10 +44,6 @@ function Prompt() {
     }
   };
 
-  const handleClose = () => {
-    window.close();
-  };
-
   useEffect(() => {
     ipcRenderer.on('highlighted-text', (event, highlightedText) => {
       setInput(highlightedText);
@@ -46,7 +58,6 @@ function Prompt() {
     <div className='prompt-container h-screen w-screen'>
       <PromptChat
         onSubmit={handleSubmit}
-        onClose={handleClose}
         inputValue={input}
         setInputValue={setInput}
         isThinking={isThinking}

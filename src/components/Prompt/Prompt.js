@@ -30,8 +30,6 @@ function Prompt() {
       const response = await AITextProcess(value);
       console.log('🚀  response:', response);
 
-      // e.preventDefault();
-      // console.log('Submitted:', input);
       ipcRenderer.send('submit-input', response);
       window.close();
     } catch (error) {

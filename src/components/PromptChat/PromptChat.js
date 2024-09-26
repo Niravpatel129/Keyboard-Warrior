@@ -1,8 +1,7 @@
 import { ArrowUpIcon } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-export default function ChatInput() {
-  const [inputValue, setInputValue] = useState('');
+export default function ChatInput({ onSubmit, inputValue, setInputValue }) {
   const textareaRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -10,8 +9,24 @@ export default function ChatInput() {
   };
 
   const handleSubmit = () => {
-    console.log('Submitted:', inputValue);
-    setInputValue('');
+    if (inputValue.trim()) {
+      console.log('Submitted:', inputValue);
+      onSubmit(inputValue);
+      setInputValue('');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (e.shiftKey) {
+        // Shift + Enter: add a new line
+        return;
+      } else {
+        // Enter alone: submit
+        e.preventDefault();
+        handleSubmit();
+      }
+    }
   };
 
   useEffect(() => {
@@ -23,12 +38,13 @@ export default function ChatInput() {
 
   return (
     <div className='w-full h-full mx-auto flex flex-col'>
-      <div className=' overflow-hidden flex flex-col flex-grow'>
+      <div className='overflow-hidden flex flex-col flex-grow'>
         <textarea
           ref={textareaRef}
           value={inputValue}
           onChange={handleInputChange}
-          placeholder='Type your message here...'
+          onKeyDown={handleKeyDown}
+          placeholder='Type your message here... (Shift+Enter for new line, Enter to submit)'
           className='w-full h-full p-3 resize-none overflow-auto border-none focus:ring-0 focus:outline-none flex-grow text-sm font-sans text-gray-700 placeholder-gray-400'
           style={{
             fontFamily:

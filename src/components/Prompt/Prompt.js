@@ -29,7 +29,12 @@ function Prompt() {
 
   return (
     <div className='prompt-container h-screen w-screen'>
-      <PromptChat />
+      <PromptChat
+        onSubmit={handleSubmit}
+        onClose={handleClose}
+        inputValue={input}
+        setInputValue={setInput}
+      />
     </div>
   );
 

@@ -52,9 +52,13 @@ function createSettingsWindow() {
     return;
   }
 
+  const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
+  const windowWidth = Math.min(Math.round(screenWidth * 0.8), 800);
+  const windowHeight = Math.min(Math.round(screenHeight * 0.8), 650);
+
   settingsWindow = new BrowserWindow({
-    width: 300,
-    height: 400,
+    width: windowWidth,
+    height: windowHeight,
     show: false,
     webPreferences: {
       nodeIntegration: true,

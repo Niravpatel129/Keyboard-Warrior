@@ -4,9 +4,11 @@ import React, { useEffect, useRef, useState } from 'react';
 export default function PromptChat({ onSubmit, inputValue, setInputValue, isThinking, errors }) {
   const textareaRef = useRef(null);
   const [dots, setDots] = useState('');
+  const [wordCount, setWordCount] = useState(0);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+    setWordCount(e.target.value.trim().split(/\s+/).length);
   };
 
   const handleSubmit = () => {
@@ -97,19 +99,26 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue, isThin
         />
         <div className='flex justify-between items-center px-3 py-2 bg-white sticky bottom-0'>
           <span className='text-xs text-gray-400'>Press Esc to close</span>
-          {isThinking ? (
-            <span className='p-2  rounded-lg text-xs text-gray-400'>☁️ Pondering{dots}</span>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className='p-2 bg-black hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
-              aria-label='Submit message'
-              disabled={isThinking}
-            >
-              <ArrowUpIcon className='h-4 w-4 text-white' />
-            </button>
-          )}
+          <div className='flex items-center'>
+            {isThinking ? (
+              <span className='p-2 rounded-lg text-xs text-gray-400'>☁️ Pondering{dots}</span>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                className='p-2 bg-black hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
+                aria-label='Submit message'
+                disabled={isThinking}
+              >
+                <ArrowUpIcon className='h-4 w-4 text-white' />
+              </button>
+            )}
+          </div>
         </div>
+        {wordCount > 3 && (
+          <span className='ml-2 text-xs text-gray-400 absolute top-2 right-4'>
+            {wordCount}/100 words
+          </span>
+        )}
       </div>
     </div>
   );

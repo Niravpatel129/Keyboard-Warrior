@@ -1,5 +1,6 @@
+import { ipcRenderer } from 'electron';
 import { ArrowUpRight, Monitor, Moon, Sun } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ToggleSwitch = ({ label, checked, onChange }) => (
   <label className='flex items-center cursor-pointer'>
@@ -20,6 +21,68 @@ export default function Component() {
   const [launchAtLogin, setLaunchAtLogin] = useState(true);
   const [appearance, setAppearance] = useState('System');
   const [textSize, setTextSize] = useState('Default');
+  const [shortcut, setShortcut] = useState('⌘ ,');
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordedKeys, setRecordedKeys] = useState([]);
+
+  useEffect(() => {
+    ipcRenderer.on('shortcut-changed', (event, newShortcut) => {
+      setShortcut(newShortcut);
+      setIsRecording(false);
+    });
+
+    const handleKeyDown = (event) => {
+      if (isRecording) {
+        event.preventDefault();
+        const key = event.key.toUpperCase();
+        const modifiers = [];
+        if (event.metaKey) modifiers.push('⌘');
+        if (event.ctrlKey) modifiers.push('Ctrl');
+        if (event.altKey) modifiers.push('Alt');
+        if (event.shiftKey) modifiers.push('Shift');
+
+        const newKeys = [...modifiers, key];
+        setRecordedKeys(newKeys);
+
+        // Check if we have a valid shortcut (at least one modifier and one key)
+        if (
+          modifiers.length > 0 &&
+          key !== 'META' &&
+          key !== 'CONTROL' &&
+          key !== 'ALT' &&
+          key !== 'SHIFT'
+        ) {
+          const newShortcut = newKeys.join('+');
+          setShortcut(newShortcut);
+          setIsRecording(false);
+          ipcRenderer.send('update-shortcut', newShortcut);
+        }
+      }
+    };
+
+    const handleKeyUp = (event) => {
+      if (isRecording) {
+        // If all modifier keys are released, stop recording
+        if (!event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) {
+          setIsRecording(false);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      ipcRenderer.removeAllListeners('shortcut-changed');
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [isRecording, recordedKeys]);
+
+  const handleShortcutChange = () => {
+    setIsRecording(true);
+    setRecordedKeys([]);
+  };
 
   return (
     <div className='bg-gray-50 p-8 rounded-xl mx-auto font-sans flex flex-col min-h-screen'>
@@ -36,8 +99,11 @@ export default function Component() {
         <div className='flex items-center justify-between'>
           <span className='text-gray-700'>Ghost Hand Hotkey</span>
           <div className='text-right'>
-            <button className='bg-white text-gray-700 px-4 py-2 rounded-md text-sm font-medium border border-gray-200 hover:border-gray-300 transition-colors'>
-              ⌘ Space
+            <button
+              className='bg-white text-gray-700 px-4 py-2 rounded-md text-sm font-medium border border-gray-200 hover:border-gray-300 transition-colors'
+              onClick={handleShortcutChange}
+            >
+              {isRecording ? 'Press key combination...' : shortcut}
             </button>
           </div>
         </div>

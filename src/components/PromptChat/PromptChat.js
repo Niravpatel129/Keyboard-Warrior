@@ -51,7 +51,7 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue }) {
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder='Type your message here... (Shift+Enter for new line, Enter to submit)'
+          placeholder='Enter your prompt here...'
           className='w-full h-full p-3 resize-none overflow-auto border-none focus:ring-0 focus:outline-none flex-grow text-sm font-sans text-gray-700 placeholder-gray-400'
           style={{
             fontFamily:
@@ -61,7 +61,8 @@ export default function PromptChat({ onSubmit, inputValue, setInputValue }) {
           }}
           aria-label='Chat input'
         />
-        <div className='flex justify-end items-center px-3 py-2 bg-white sticky bottom-0'>
+        <div className='flex justify-between items-center px-3 py-2 bg-white sticky bottom-0'>
+          <span className='text-xs text-gray-400'>Press Esc to close</span>
           <button
             onClick={handleSubmit}
             className='p-2 bg-black hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'

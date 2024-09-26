@@ -1,18 +1,6 @@
 import { ArrowUpRight, Monitor, Moon, Sun } from 'lucide-react';
 import React, { useState } from 'react';
 
-const Tab = ({ icon: Icon, text, active, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
-      active ? 'bg-white shadow-md text-gray-900' : 'text-gray-500 hover:bg-white hover:shadow-sm'
-    }`}
-  >
-    <Icon className='w-5 h-5' />
-    <span className='text-sm font-medium'>{text}</span>
-  </button>
-);
-
 const ToggleSwitch = ({ label, checked, onChange }) => (
   <label className='flex items-center cursor-pointer'>
     <div className='relative'>
@@ -29,14 +17,13 @@ const ToggleSwitch = ({ label, checked, onChange }) => (
 );
 
 export default function Component() {
-  const [activeTab, setActiveTab] = useState('General');
   const [launchAtLogin, setLaunchAtLogin] = useState(true);
   const [appearance, setAppearance] = useState('System');
   const [textSize, setTextSize] = useState('Default');
 
   return (
-    <div className='bg-gray-50 p-8 rounded-xl  mx-auto font-sans'>
-      <div className='space-y-8'>
+    <div className='bg-gray-50 p-8 rounded-xl mx-auto font-sans flex flex-col min-h-screen'>
+      <div className='space-y-8 flex-grow'>
         <div className='flex items-center justify-between'>
           <span className='text-gray-700'>Startup</span>
           <ToggleSwitch
@@ -52,9 +39,6 @@ export default function Component() {
             <button className='bg-white text-gray-700 px-4 py-2 rounded-md text-sm font-medium border border-gray-200 hover:border-gray-300 transition-colors'>
               ⌘ Space
             </button>
-            <a href='#' className='block mt-1 text-xs text-gray-900 hover:underline'>
-              How to replace Spotlight with Ghost Hand
-            </a>
           </div>
         </div>
 
@@ -100,19 +84,17 @@ export default function Component() {
             ))}
           </div>
         </div>
+      </div>
 
-        <div className='bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-lg flex items-center justify-between border border-gray-200 hover:border-gray-300 transition-colors cursor-pointer'>
-          <div>
-            <span className='text-gray-900 bg-gray-200 px-2 py-1 rounded-full text-xs font-semibold'>
-              Free Trial
-            </span>
-            <h3 className='font-bold mt-2 text-gray-800'>25 Free Prompts</h3>
-            <p className='text-sm text-gray-600'>
-              Try Ghost Hand with 25 free prompts, then upgrade for unlimited use
-            </p>
-          </div>
-          <ArrowUpRight className='w-6 h-6 text-gray-900' />
+      <div className='bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-lg flex items-center justify-between border border-gray-200 hover:border-gray-300 transition-colors cursor-pointer mt-8'>
+        <div>
+          <span className='text-gray-900 bg-gray-200 px-2 py-1 rounded-full text-xs font-semibold'>
+            Free Trial
+          </span>
+          <h3 className='font-bold mt-2 text-gray-800'>25 Free Prompts</h3>
+          <p className='text-sm text-gray-600'>Upgrade to unlock unlimited prompts and features</p>
         </div>
+        <ArrowUpRight className='w-6 h-6 text-gray-900' />
       </div>
     </div>
   );

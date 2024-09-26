@@ -11,6 +11,8 @@ function captureHighlightedText(highlightOnly = false) {
 
       if (highlightedText && highlightedText.trim().length > 0) {
         if (highlightOnly) {
+          console.log('🚀  highlightedText:', highlightedText);
+
           resolve(highlightedText);
         } else {
           // Process the text using AI to fix grammar

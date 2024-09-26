@@ -177,25 +177,37 @@ function createPromptWindow(highlightedText) {
 }
 
 function replaceSelectedText(text) {
-  // Escape special characters in the text
-  const escapedText = text.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/'/g, "\\'");
+  console.log('🚀  text:', text);
 
+  const { clipboard } = electron;
+  const previousClipboardContent = clipboard.readText();
+
+  // Set the clipboard to the new text
+  clipboard.writeText(text);
+
+  // Simulate 'paste' command
   const script = `
     tell application "${previousApp}"
       activate
-      delay 0.1
-      tell application "System Events"
-        keystroke "${escapedText}"
-      end tell
+    end tell
+    tell application "System Events"
+      keystroke "v" using {command down}
     end tell
   `;
 
   osascript.execute(script, (err) => {
     if (err) {
       console.error('Error executing AppleScript:', err);
+      // Restore the previous clipboard content immediately in case of error
+      clipboard.writeText(previousClipboardContent);
       return;
     }
     console.log('Replaced selected text');
+
+    // Restore the previous clipboard content after a short delay
+    setTimeout(() => {
+      clipboard.writeText(previousClipboardContent);
+    }, 100);
   });
 }
 

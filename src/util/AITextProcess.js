@@ -11,10 +11,14 @@ export async function AITextProcess(selectedText, prompt) {
 
   try {
     console.log('Sending request to backend API');
-    const response = await axios.post('http://localhost:3000/api/prompt/generate', {
-      selectedText: selectedText || '',
-      prompt,
-    });
+    const productionUrl = 'https://ghostwriter-backend-76e064fd9c38.herokuapp.com';
+    const response = await axios.post(
+      productionUrl || 'http://localhost:3000/api/prompt/generate',
+      {
+        selectedText: selectedText || '',
+        prompt,
+      },
+    );
     console.log('Received response from backend API:', response.data);
 
     if (
